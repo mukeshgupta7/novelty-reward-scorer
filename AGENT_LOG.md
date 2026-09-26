@@ -34,8 +34,9 @@ the cutoff still needs validation on held-out, human-labeled data.
 
 ## Evaluation
 
-Five local tests cover off-topic gating, novelty ordering, duplicate handling,
-and score bounds. The test suite passes with the offline TF-IDF backend.
+Seven offline pytest cases cover off-topic gating, novelty ordering, duplicate
+handling, score bounds, and the provisional Gemini cutoff boundary. The test
+suite passes without making live Gemini calls.
 Python syntax and Gemini SDK imports were checked; a live Gemini API call was
 not tested.
 
