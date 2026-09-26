@@ -14,12 +14,13 @@ import json
 from math import sqrt
 from pathlib import Path
 
-import numpy as np
 import pytest
+import numpy as np
 
 from src.embeddings import TextEmbedder
 from src.novelty import (
     build_corpus,
+    relevance_floor_for_backend,
     score_submission,
     submission_text,
 )
@@ -154,8 +155,6 @@ def test_gemini_relevance_floor_separates_observed_sample_scores(
     query_text = submission_text(submission)
 
     class FixedEmbedder:
-        backend = "gemini"
-
         def embed(self, text):
             if text == fixed_content:
                 return np.array([1.0, 0.0])
@@ -168,6 +167,7 @@ def test_gemini_relevance_floor_separates_observed_sample_scores(
         pool,
         fixed_content,
         embedder=FixedEmbedder(),
+        relevance_floor=relevance_floor_for_backend("gemini"),
     )
 
     if should_pass_gate:

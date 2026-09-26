@@ -1,2 +1,2 @@
--r requirements-gemini.txt
+-r requirements.txt
 streamlit>=1.40

@@ -71,7 +71,7 @@ def score_submission(
     pool: list[dict],
     fixed_content: str,
     embedder=None,  # TextEmbedder or GeminiEmbedder; see src/embeddings.py
-    relevance_floor: float | None = None,
+    relevance_floor: float = RELEVANCE_FLOOR,
 ) -> ScoreResult:
     """
     Score `new_submission` for novelty against `pool`, gated by relevance to
@@ -82,10 +82,6 @@ def score_submission(
     if embedder is None:
         corpus = build_corpus(pool, fixed_content) + [submission_text(new_submission)]
         embedder = get_embedder(corpus)  # backend chosen via EMBEDDING_BACKEND env var
-    if relevance_floor is None:
-        relevance_floor = relevance_floor_for_backend(
-            getattr(embedder, "backend", "local")
-        )
 
     new_vec = embedder.embed(submission_text(new_submission))
     fixed_vec = embedder.embed(fixed_content)
