@@ -1,0 +1,6 @@
+scikit-learn>=1.3
+numpy>=1.24
+pytest>=7.4
+
+# Only needed if EMBEDDING_BACKEND=gemini (see README)
+google-genai>=1.0

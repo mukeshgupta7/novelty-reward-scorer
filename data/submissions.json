@@ -1,0 +1,352 @@
+[
+  {
+    "id": "medium-10",
+    "headline": "Climate benefits outweigh the downside",
+    "body": "Cutting emissions from downtown car trips seems worth the inconvenience of losing some parking.",
+    "stance": "Support",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "medium-08",
+    "headline": "Cyclist safety is the real priority",
+    "body": "Given how many cyclists get hurt downtown, protected lanes seem like an overdue safety upgrade.",
+    "stance": "Support",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "medium-04",
+    "headline": "Will shoppers still come downtown?",
+    "body": "With less parking, some customers who drive in for quick errands might just skip downtown altogether.",
+    "stance": "Neutral",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "low-11",
+    "headline": "Cars will suffer from these lanes",
+    "body": "Not great \u2014 removing parking spots downtown will make the traffic worse for everyone who drives.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "low-04",
+    "headline": "This will make downtown traffic worse",
+    "body": "Bad call, honestly. Cutting parking spots downtown will just make the traffic worse for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "offtopic-00",
+    "headline": "My favorite pasta recipe",
+    "body": "I made a great carbonara last night using guanciale instead of bacon, and it completely changed the flavor.",
+    "stance": "Neutral",
+    "expected_novelty_band": "offtopic"
+  },
+  {
+    "id": "medium-11",
+    "headline": "This is mostly about emissions, not traffic",
+    "body": "The bigger win here is fewer downtown car trips and lower emissions, not the parking argument.",
+    "stance": "Support",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "low-09",
+    "headline": "Traffic congestion will increase",
+    "body": "This is a bad idea \u2014 losing parking spots downtown will make the traffic worse for everyone driving.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "medium-14",
+    "headline": "Side streets will absorb the overflow",
+    "body": "If downtown lanes shrink for bikes, all that car traffic has to spill onto quieter side streets nearby.",
+    "stance": "Oppose",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "medium-01",
+    "headline": "Losing foot traffic to bike lanes",
+    "body": "Store owners near the new lanes are worried customers will avoid downtown once parking shrinks.",
+    "stance": "Oppose",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "high-01",
+    "headline": "$40M could fix transit instead",
+    "body": "For $40M, the city could subsidize bus fares citywide for years \u2014 bike lanes feel like a narrow use of a big budget.",
+    "stance": "Oppose",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "medium-06",
+    "headline": "Safety gains are worth it",
+    "body": "Fewer cyclist injuries matters more than a few lost parking spots near downtown storefronts.",
+    "stance": "Support",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "low-12",
+    "headline": "This traffic plan is flawed",
+    "body": "Bad idea, taking away parking downtown is just going to make traffic worse for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "low-03",
+    "headline": "Bike lanes = worse traffic",
+    "body": "Not a good idea. Removing the parking spots is going to make traffic worse downtown for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "high-09",
+    "headline": "Bike theft infrastructure gap",
+    "body": "None of this addresses secure bike parking downtown \u2014 safer lanes won't matter if riders still can't safely park at their destination.",
+    "stance": "Neutral",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "high-08",
+    "headline": "Construction disruption is the real cost",
+    "body": "Two years of construction chaos downtown could do more damage to small businesses than the permanent parking loss ever will.",
+    "stance": "Oppose",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "low-10",
+    "headline": "Bike lanes are a bad traffic move",
+    "body": "Bad idea overall since removing the downtown parking will worsen traffic for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "medium-09",
+    "headline": "Emissions cuts matter more than parking",
+    "body": "Reducing car trips downtown by making biking safer is a reasonable tradeoff for a few parking spots.",
+    "stance": "Support",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "high-05",
+    "headline": "Equity angle nobody's raising",
+    "body": "Lower-income residents who can't afford e-bikes or cargo bikes may benefit least from this, even though they're subsidizing it via taxes.",
+    "stance": "Support",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "low-00",
+    "headline": "Bike lanes will just cause more traffic",
+    "body": "This is a bad idea because removing parking spots will make traffic worse for everyone driving downtown.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "high-13",
+    "headline": "Enforcement is the missing piece",
+    "body": "Protected lanes only work if the city actually enforces them; right now enforcement of existing bike lanes downtown is basically nonexistent.",
+    "stance": "Oppose",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "medium-03",
+    "headline": "Retailers fear the parking cuts",
+    "body": "Local shop owners say losing curbside parking could push regular customers to suburban strip malls.",
+    "stance": "Oppose",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "high-03",
+    "headline": "Delivery trucks need a real plan",
+    "body": "Commercial delivery access downtown isn't mentioned at all \u2014 trucks double-parking in bike lanes could become the new normal.",
+    "stance": "Neutral",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "offtopic-03",
+    "headline": "Thoughts on the new season of my show",
+    "body": "The latest season felt rushed compared to earlier ones, especially the finale which wrapped up too quickly.",
+    "stance": "Oppose",
+    "expected_novelty_band": "offtopic"
+  },
+  {
+    "id": "high-11",
+    "headline": "This could be a template for other districts",
+    "body": "If this works, it's a testable model the city could roll out to the two other congested commercial corridors it has.",
+    "stance": "Support",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "high-00",
+    "headline": "Who actually gets a vote here?",
+    "body": "The council approved this after limited public hearings \u2014 the real question is whether residents outside downtown had any say at all.",
+    "stance": "Neutral",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "medium-13",
+    "headline": "Traffic doesn't disappear, it moves",
+    "body": "Removing driving lanes downtown for bikes likely reroutes the same congestion to nearby residential streets.",
+    "stance": "Neutral",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "medium-05",
+    "headline": "Business worries about the redesign",
+    "body": "Several small business owners are concerned the lane changes will quietly erode their walk-in traffic.",
+    "stance": "Oppose",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "medium-07",
+    "headline": "Protecting cyclists should come first",
+    "body": "The injury data makes this an easy call \u2014 rider safety should outweigh convenience parking downtown.",
+    "stance": "Support",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "high-12",
+    "headline": "The real fight is about curb space, not bikes",
+    "body": "This is less about cyclists and more a proxy war over who controls scarce curb space: delivery, parking, or bikes.",
+    "stance": "Neutral",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "offtopic-01",
+    "headline": "New phone review",
+    "body": "The battery life on the latest flagship phone is impressive, easily lasting a full day of heavy use.",
+    "stance": "Support",
+    "expected_novelty_band": "offtopic"
+  },
+  {
+    "id": "high-06",
+    "headline": "Insurance and liability shift",
+    "body": "Once the city builds protected lanes, does liability for cyclist-vehicle collisions shift toward the city instead of drivers? That's untested legally.",
+    "stance": "Neutral",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "high-02",
+    "headline": "Winter usability is being ignored",
+    "body": "Nobody's addressing how these lanes function once snow season hits; plowing bike infrastructure is often an afterthought here.",
+    "stance": "Oppose",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "high-14",
+    "headline": "Property values near the corridor",
+    "body": "Cities with similar redesigns often saw nearby property values rise over time as the area became more walkable and attractive.",
+    "stance": "Support",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "low-13",
+    "headline": "Bike lanes hurt drivers",
+    "body": "Bad idea since removing downtown parking spots will make traffic worse for everyone driving.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "offtopic-04",
+    "headline": "Gym routine update",
+    "body": "Switched to a push-pull-legs split this month and I'm already noticing better recovery between sessions.",
+    "stance": "Support",
+    "expected_novelty_band": "offtopic"
+  },
+  {
+    "id": "offtopic-02",
+    "headline": "Weekend hiking trip",
+    "body": "We hiked up to the ridge trail this weekend and the fall colors were absolutely stunning up there.",
+    "stance": "Neutral",
+    "expected_novelty_band": "offtopic"
+  },
+  {
+    "id": "low-02",
+    "headline": "More traffic because of bike lanes",
+    "body": "I think this is a bad plan; losing parking will worsen the traffic situation for everyone who drives downtown.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "medium-12",
+    "headline": "Congestion will just shift elsewhere",
+    "body": "Cutting lanes downtown for bikes could just push the same car congestion onto side streets instead.",
+    "stance": "Neutral",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "high-07",
+    "headline": "Compare this to peer cities' data",
+    "body": "Cities that added similar protected lanes saw injury drops within 18 months \u2014 the timeline here roughly matches that pattern.",
+    "stance": "Support",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "low-05",
+    "headline": "Traffic will get worse with these lanes",
+    "body": "It's a bad idea because you're removing parking and that will make the downtown traffic worse for cars.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "high-04",
+    "headline": "This mirrors a failed pilot from 2019",
+    "body": "A similar corridor redesign was tried and quietly reversed a few years back after merchant pushback; what's different this time?",
+    "stance": "Oppose",
+    "expected_novelty_band": "high"
+  },
+  {
+    "id": "low-06",
+    "headline": "Worse traffic incoming from bike lanes",
+    "body": "Bad idea in my view \u2014 fewer parking spots downtown means worse traffic for everyone who drives.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "low-08",
+    "headline": "Downtown traffic will worsen",
+    "body": "Bad idea because removing parking spots downtown is going to make the traffic worse for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "low-14",
+    "headline": "Parking loss means traffic gain",
+    "body": "This is a bad idea; removing parking spots downtown will make the traffic situation worse for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "medium-00",
+    "headline": "Small businesses will lose customers",
+    "body": "Shoppers who drive downtown may just stop coming if parking gets harder to find near stores.",
+    "stance": "Oppose",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "medium-02",
+    "headline": "Downtown shops could take a hit",
+    "body": "It's plausible fewer parking spaces means fewer drive-in customers for small downtown retailers.",
+    "stance": "Neutral",
+    "expected_novelty_band": "medium"
+  },
+  {
+    "id": "low-01",
+    "headline": "These bike lanes will make traffic worse",
+    "body": "Bad idea overall, since taking away parking spaces will make downtown traffic worse for drivers.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "low-07",
+    "headline": "Bike lanes will hurt traffic flow",
+    "body": "This seems like a bad idea since removing parking downtown will make traffic worse for drivers overall.",
+    "stance": "Oppose",
+    "expected_novelty_band": "low"
+  },
+  {
+    "id": "high-10",
+    "headline": "Tourism impact is underexplored",
+    "body": "Downtown draws a lot of weekend tourist traffic by car; nobody's modeled whether reduced parking hurts weekend tourism revenue.",
+    "stance": "Neutral",
+    "expected_novelty_band": "high"
+  }
+]
