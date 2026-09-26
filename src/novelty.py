@@ -28,6 +28,21 @@ import numpy as np
 from src.embeddings import TextEmbedder, cosine, get_embedder
 
 RELEVANCE_FLOOR = 0.07  # tuned against the synthetic dataset; see README "Threshold tuning"
+GEMINI_RELEVANCE_FLOOR = 0.773
+
+
+def relevance_floor_for_backend(backend: str) -> float:
+    floors = {
+        "local": RELEVANCE_FLOOR,
+        "gemini": GEMINI_RELEVANCE_FLOOR,
+    }
+    normalized_backend = backend.strip().lower()
+    try:
+        return floors[normalized_backend]
+    except KeyError as error:
+        raise ValueError(
+            f"Unknown embedding backend={backend!r}. Use 'local' or 'gemini'."
+        ) from error
 
 
 def submission_text(submission: dict) -> str:

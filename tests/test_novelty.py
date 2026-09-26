@@ -11,12 +11,19 @@ assert against known-good expectations rather than eyeballing numbers.
 """
 
 import json
+from math import sqrt
 from pathlib import Path
 
 import pytest
+import numpy as np
 
 from src.embeddings import TextEmbedder
-from src.novelty import build_corpus, score_submission
+from src.novelty import (
+    build_corpus,
+    relevance_floor_for_backend,
+    score_submission,
+    submission_text,
+)
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -122,6 +129,52 @@ def test_relevance_gate_overrides_novelty_score():
 
     assert result.novelty > 0.8, "sanity check: this submission should look highly novel against the pool"
     assert result.final_score == 0.0, "off-topic content must not be rewarded even when maximally novel"
+
+
+@pytest.mark.parametrize(
+    ("relevance", "should_pass_gate"),
+    [(0.758, False), (0.787, True)],
+)
+def test_gemini_relevance_floor_separates_observed_sample_scores(
+    relevance, should_pass_gate
+):
+    fixed_content = "fixed article"
+    submission = {
+        "id": "new",
+        "headline": "New submission",
+        "body": "A comment to score.",
+        "stance": "Neutral",
+    }
+    pool = [{
+        "id": "existing",
+        "headline": "Existing submission",
+        "body": "A different comment.",
+        "stance": "Support",
+    }]
+    submission_embedding = np.array([relevance, sqrt(1 - relevance**2)])
+    query_text = submission_text(submission)
+
+    class FixedEmbedder:
+        def embed(self, text):
+            if text == fixed_content:
+                return np.array([1.0, 0.0])
+            if text == query_text:
+                return submission_embedding
+            return np.array([0.0, 1.0])
+
+    result = score_submission(
+        submission,
+        pool,
+        fixed_content,
+        embedder=FixedEmbedder(),
+        relevance_floor=relevance_floor_for_backend("gemini"),
+    )
+
+    if should_pass_gate:
+        assert result.final_score == pytest.approx(result.novelty)
+    else:
+        assert result.novelty > 0.0
+        assert result.final_score == 0.0
 
 
 def test_score_is_always_in_unit_interval(dataset, embedder):

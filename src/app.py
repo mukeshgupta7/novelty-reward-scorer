@@ -9,7 +9,12 @@ from pathlib import Path
 import streamlit as st
 
 from src.embeddings import get_embedder
-from src.novelty import RELEVANCE_FLOOR, build_corpus, score_submission, submission_text
+from src.novelty import (
+    build_corpus,
+    relevance_floor_for_backend,
+    score_submission,
+    submission_text,
+)
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -77,6 +82,7 @@ with st.sidebar:
     st.header("Scoring setup")
     backend_label = st.selectbox("Embedding backend", ("Local (offline)", "Gemini API"))
     backend = "gemini" if backend_label == "Gemini API" else "local"
+    relevance_floor = relevance_floor_for_backend(backend)
     if backend == "gemini" and not os.environ.get("GEMINI_API_KEY"):
         st.warning("Set GEMINI_API_KEY in the environment that starts Streamlit.")
     with st.expander("Reference story"):
@@ -117,6 +123,7 @@ if submitted:
                 submissions,
                 fixed_content,
                 embedder=embedder,
+                relevance_floor=relevance_floor,
             )
             nearest = next(
                 (item for item in submissions if item["id"] == result.nearest_neighbor_id),
@@ -126,6 +133,7 @@ if submitted:
                 "result": result,
                 "nearest": nearest,
                 "backend": backend_label,
+                "relevance_floor": relevance_floor,
             }
         except Exception as error:
             st.session_state.pop("last_score", None)
@@ -139,13 +147,16 @@ with result_column:
     last_score = st.session_state.get("last_score")
     if last_score:
         result = last_score["result"]
+        result_relevance_floor = last_score["relevance_floor"]
         relevance_column, novelty_column, reward_column = st.columns(3)
         relevance_column.metric("Relevance", f"{result.relevance:.3f}")
         novelty_column.metric("Novelty", f"{result.novelty:.3f}")
         reward_column.metric("Reward", f"{result.final_score:.3f}")
-        st.caption(f"Backend: {last_score['backend']} · relevance floor: {RELEVANCE_FLOOR:.2f}")
+        st.caption(
+            f"Backend: {last_score['backend']} · relevance floor: {result_relevance_floor:.3f}"
+        )
 
-        if result.relevance < RELEVANCE_FLOOR:
+        if result.relevance < result_relevance_floor:
             st.warning("Reward gated: relevance is below the minimum threshold.")
         else:
             st.success("Relevance gate passed.")

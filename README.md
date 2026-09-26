@@ -210,10 +210,12 @@ python -m src.score
 Replace the placeholder with your key locally; never commit it. The output
 prints `[embedding backend: gemini]` when Gemini is selected.
 
-The relevance cutoff (`0.07`) was tuned with local TF-IDF, not Gemini. In the
-sample Gemini run, off-topic items received positive rewards, so Gemini has
-not yet been validated against the no-off-topic-reward requirement. Re-tune
-and test the relevance gate before relying on Gemini scores.
+The local relevance cutoff is `0.07`. Gemini uses a separate provisional
+cutoff of `0.773`, midway between the highest off-topic relevance (`0.758`)
+and lowest on-topic relevance (`0.787`) in the captured sample. The Gemini
+screenshot shows scores from before this cutoff was applied. This threshold
+separates only that small synthetic sample; validate it on held-out labeled
+data before relying on Gemini scores.
 
 ### Streamlit demo
 
