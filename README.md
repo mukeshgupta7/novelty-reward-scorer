@@ -59,7 +59,7 @@ interchangeable backends** behind one environment variable,
 | `EMBEDDING_BACKEND` | What it uses | Needs |
 |---|---|---|
 | `local` (default) | TF-IDF over character n-grams (3-5 chars), `scikit-learn` | nothing — fully offline |
-| `gemini` | Google's `text-embedding-004` live API | `GEMINI_API_KEY` + `pip install google-generativeai` |
+| `gemini` | Google's `gemini-embedding-001` live API | `GEMINI_API_KEY` + `pip install "google-genai>=1.0"` |
 
 Both backends implement the exact same interface (`fit(corpus)` /
 `embed(text)`), selected by a single factory function, `get_embedder()` —
@@ -185,21 +185,35 @@ generate a free API key.
 
 **Step 2 — install the Gemini SDK**
 ```bash
-pip install google-generativeai
+python -m pip install "google-genai>=1.0"
 ```
 
-**Step 3 — set the two environment variables**
+**Step 3 — set the environment variables**
+
+In Windows Command Prompt (`cmd`):
+```cmd
+set "GEMINI_API_KEY=YOUR_API_KEY"
+set "EMBEDDING_BACKEND=gemini"
+```
+
+In PowerShell:
+```powershell
+$env:GEMINI_API_KEY = "YOUR_API_KEY"
+$env:EMBEDDING_BACKEND = "gemini"
+```
+
+In Bash:
 ```bash
 export GEMINI_API_KEY=your-key-here
 export EMBEDDING_BACKEND=gemini
 ```
 
 **Step 4 — run exactly as before**
-```bash
-python3 -m src.score
+```cmd
+python -m src.score
 ```
 You'll see `[embedding backend: gemini]` printed at the top, and every
-`embed()` call now goes to Google's `text-embedding-004` model instead of
+`embed()` call now goes to Google's `gemini-embedding-001` model instead of
 the local TF-IDF vectorizer. Same CLI, same output format, same tests —
 only the underlying similarity calculation changes.
 
@@ -209,6 +223,8 @@ unset EMBEDDING_BACKEND
 # or explicitly: export EMBEDDING_BACKEND=local
 python3 -m src.score
 ```
+In Windows Command Prompt, run `set "EMBEDDING_BACKEND=local"` before
+`python -m src.score`.
 
 ### Notes
 
@@ -221,8 +237,8 @@ python3 -m src.score
   setup.
 - **Dataset generation** (`src/generate_dataset.py`) has its own,
   independent Gemini switch: if `GEMINI_API_KEY` is set (and
-  `google-generativeai` is installed and reachable), running
-  `python3 -m src.generate_dataset` will ask Gemini to generate the 50
+  `google-genai` is installed and reachable), running
+  `python -m src.generate_dataset` will ask Gemini to generate the 50
   synthetic submissions directly instead of using the hardcoded templates.
   It falls back to the templates automatically on any missing key, missing
   package, network error, or malformed response — so it always produces a
