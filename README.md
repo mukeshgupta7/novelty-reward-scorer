@@ -124,6 +124,9 @@ only consumes `data/submissions.json`'s schema, not how it was produced.
 | `low` (near-duplicates) | 0.386 | 15 |
 | `offtopic` | **0.000** | 5 |
 
+<img width="940" height="647" alt="image" src="https://github.com/user-attachments/assets/bbd5e251-5c79-4c76-9cbd-246dd805b0c6" />
+<img width="651" height="422" alt="image" src="https://github.com/user-attachments/assets/3dfe947e-a8d2-49f1-9a15-829f187c9baa" />
+
 All 5 automated tests in `tests/test_novelty.py` pass:
 - `test_offtopic_submissions_never_rewarded` — confirms all 5 off-topic
   items score `0.0` despite having *high raw novelty* (>0.7), proving the
