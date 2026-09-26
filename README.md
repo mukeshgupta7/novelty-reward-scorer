@@ -96,13 +96,10 @@ expectations:
   (pasta, hiking, phones, TV shows, gym routines) submitted against the
   bike-lane article.
 
-Synthetic generation used hand-authored templates rather than a live LLM
-call, because this sandboxed dev environment has no outbound network access
-to Gemini/OpenAI's APIs (see `AGENT_LOG.md`). `src/generate_dataset.py`
-includes a `generate_with_gemini()` stub documenting exactly how to wire in
-live LLM generation if you have a `GEMINI_API_KEY` and internet access —
-the rest of the pipeline (scoring, tests) is unaffected either way, since it
-only consumes `data/submissions.json`'s schema, not how it was produced.
+The committed dataset uses hand-authored templates. `src/generate_dataset.py`
+can also generate submissions with Gemini when `GEMINI_API_KEY` is set and
+the `requirements-gemini.txt` dependencies are installed; it falls back to
+the templates if generation fails.
 
 ## 4. Results — success criteria and level of achievement
 
@@ -114,7 +111,7 @@ only consumes `data/submissions.json`'s schema, not how it was produced.
    "clearly rewarded" bar (`final_score > 0.5`).
 4. All scores must stay within `[0.0, 1.0]`.
 
-**Achieved** (leave-one-out scoring across all 50 items,
+**Local TF-IDF results** (leave-one-out scoring across all 50 items,
 `python -m src.score`):
 
 | Band | Avg. final score | n |
@@ -124,10 +121,14 @@ only consumes `data/submissions.json`'s schema, not how it was produced.
 | `low` (near-duplicates) | 0.386 | 15 |
 | `offtopic` | **0.000** | 5 |
 
-<img width="940" height="647" alt="image" src="https://github.com/user-attachments/assets/bbd5e251-5c79-4c76-9cbd-246dd805b0c6" />
-<img width="651" height="422" alt="image" src="https://github.com/user-attachments/assets/3dfe947e-a8d2-49f1-9a15-829f187c9baa" />
+The screenshots show a Gemini run captured before its backend-specific
+relevance cutoff was added. They are diagnostic output, not the local results
+in the table above; off-topic Gemini scores were positive in that run.
 
-All 5 automated tests in `tests/test_novelty.py` pass:
+<img width="940" height="647" alt="Gemini CLI scores before the backend-specific cutoff" src="https://github.com/user-attachments/assets/bbd5e251-5c79-4c76-9cbd-246dd805b0c6" />
+<img width="651" height="422" alt="Gemini band averages before the backend-specific cutoff" src="https://github.com/user-attachments/assets/3dfe947e-a8d2-49f1-9a15-829f187c9baa" />
+
+All 7 pytest cases in `tests/test_novelty.py` pass:
 - `test_offtopic_submissions_never_rewarded` — confirms all 5 off-topic
   items score `0.0` despite having *high raw novelty* (>0.7), proving the
   relevance gate — not a lack of novelty — is what blocks the reward.
@@ -139,6 +140,9 @@ All 5 automated tests in `tests/test_novelty.py` pass:
 - `test_relevance_gate_overrides_novelty_score` — a from-scratch unit test
   (independent of the generated dataset) that constructs a maximally novel
   but clearly off-topic submission and confirms it still scores `0.0`.
+- `test_gemini_relevance_floor_separates_observed_sample_scores` — checks
+  that the provisional Gemini cutoff blocks the highest observed off-topic
+  sample score and allows the lowest observed on-topic sample score.
 - `test_score_is_always_in_unit_interval` — sanity bound-check.
 
 Run them yourself:
@@ -146,7 +150,7 @@ Run them yourself:
 pip install scikit-learn numpy pytest
 python3 src/generate_dataset.py   # regenerate data/submissions.json (optional, already committed)
 python3 -m src.score              # see per-item + per-band scores
-python3 -m pytest tests/ -v
+python3 -m pytest tests -v
 ```
 
 ### Threshold tuning
@@ -196,7 +200,7 @@ Create a key in [Google AI Studio](https://aistudio.google.com/) and install
 the dependencies:
 
 ```cmd
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-gemini.txt
 ```
 
 In the same `cmd` window, set the key and backend, then run the scorer:
@@ -262,14 +266,11 @@ not require `EMBEDDING_BACKEND`.
 
 ## 6. Limitations
 
-- **Lexical, not semantic, relevance matching.** Because embeddings are
-  TF-IDF/character-based (not a trained semantic model), relevance
-  detection depends on some vocabulary overlap with the fixed content's
-  exact wording. A submission that is genuinely on-topic but uses entirely
-  different vocabulary (synonyms, oblique references) can be
-  under-scored — see the 3 false negatives above. Swapping in Gemini's or
-  OpenAI's embedding API would very likely fix this, since those models
-  capture semantic similarity independent of shared words.
+- **Backend-specific relevance behavior.** Local TF-IDF depends on character
+  overlap and can under-score on-topic comments with different wording.
+  Gemini captures semantic similarity, but its relevance cutoff is only
+  provisionally calibrated to this small synthetic dataset and needs
+  held-out validation before production use.
 - **Small pool, in-memory only.** At ~50 items, holding everything in
   memory and refitting the vectorizer is fine; this would need a proper
   vector index (pgvector, FAISS) at real scale (thousands+ of submissions),
@@ -282,10 +283,9 @@ not require `EMBEDDING_BACKEND`.
   required structured fields but only included as a tag string in the
   embedded text; a fuller system might weight novelty/relevance separately
   per stance (e.g. "novel *given* that this is a Support-stance comment").
-- **Threshold tuned on one synthetic dataset.** `RELEVANCE_FLOOR = 0.07`
-  is specific to this fixed-content example and embedding method; it would
-  need re-validation (or an adaptive/percentile-based floor) for other
-  topics or a live embedding model.
+- **Thresholds tuned on one synthetic dataset.** The local `0.07` floor and
+  provisional Gemini `0.773` floor require re-validation for other topics,
+  datasets, and embedding model versions.
 - **No abuse/gaming defenses.** A user submitting deliberately garbled or
   keyword-stuffed text to game novelty isn't defended against here; a
   production system would likely add a minimum text-quality/coherence check
@@ -299,12 +299,13 @@ novelty-reward/
 │   ├── fixed_content.json      # the fixed news snippet
 │   └── submissions.json        # 50 synthetic labeled submissions (golden dataset)
 ├── src/
-│   ├── generate_dataset.py     # synthetic dataset generator (template-based + Gemini stub)
+│   ├── generate_dataset.py     # template generator with optional Gemini generation
 │   ├── embeddings.py           # local TF-IDF embedder (swap point for real embeddings)
 │   ├── novelty.py              # core scoring algorithm
 │   └── score.py                # CLI: leave-one-out scoring over the whole dataset
 ├── tests/
-│   └── test_novelty.py         # 5 automated tests, see section 4
+│   └── test_novelty.py         # 7 pytest cases, see section 4
+├── requirements-gemini.txt     # optional Gemini SDK dependencies
 ├── README.md                   # this file
 └── AGENT_LOG.md                # coding-agent disclosure / prompt trace
 ```

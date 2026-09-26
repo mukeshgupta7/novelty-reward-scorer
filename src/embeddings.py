@@ -34,6 +34,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 class TextEmbedder:
+    backend = "local"
+
     def __init__(self):
         self._vectorizer = TfidfVectorizer(
             analyzer="char_wb",
@@ -64,12 +66,12 @@ class TextEmbedder:
 
 class GeminiEmbedder:
     """
-        Live embedding backend using Google's Gemini API.
+    Live embedding backend using Google's Gemini API.
 
     Requires:
-            1. `pip install google-genai`
+      1. `pip install google-genai`
       2. A free API key from https://aistudio.google.com/
-            3. Set the `GEMINI_API_KEY` environment variable.
+      3. Set the `GEMINI_API_KEY` environment variable.
 
     Implements the same `fit(corpus)` / `embed(text)` interface as
     TextEmbedder so it's a drop-in replacement -- `fit()` is a no-op here
@@ -77,6 +79,7 @@ class GeminiEmbedder:
     vocabulary, it's kept only for interface compatibility.
     """
 
+    backend = "gemini"
     MODEL = "gemini-embedding-001"
 
     def __init__(self):
@@ -86,7 +89,7 @@ class GeminiEmbedder:
         except ImportError as e:
             raise ImportError(
                 "EMBEDDING_BACKEND=gemini requires the google-genai "
-                "package. Install it with: pip install google-genai"
+                'package. Install it with: python -m pip install "google-genai>=1.0"'
             ) from e
 
         api_key = os.environ.get("GEMINI_API_KEY")
