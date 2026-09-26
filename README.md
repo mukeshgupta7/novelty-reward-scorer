@@ -104,6 +104,11 @@ live LLM generation if you have a `GEMINI_API_KEY` and internet access —
 the rest of the pipeline (scoring, tests) is unaffected either way, since it
 only consumes `data/submissions.json`'s schema, not how it was produced.
 
+<img width="940" height="647" alt="image" src="https://github.com/user-attachments/assets/bbd5e251-5c79-4c76-9cbd-246dd805b0c6" />
+<img width="651" height="422" alt="image" src="https://github.com/user-attachments/assets/3dfe947e-a8d2-49f1-9a15-829f187c9baa" />
+
+
+
 ## 4. Results — success criteria and level of achievement
 
 **Success criteria defined up front:**
