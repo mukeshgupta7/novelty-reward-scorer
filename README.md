@@ -168,66 +168,66 @@ under-rewarded borderline-relevant items is a safer failure mode than any
 off-topic item slipping through. See Limitations for how a semantic
 embedding model would close this gap.
 
-## 5. Switching between local and Gemini embeddings
+## 5. Running the CLI and Streamlit demo
 
-Everything below is a **one-variable switch** — no code edits required.
+Run commands from the repository root. The CLI uses local TF-IDF by default;
+Gemini requires the `google-genai` package, an API key, and network access.
 
-### Stay offline (default — nothing to do)
+### Offline CLI
 
-```bash
-python3 -m src.score
-```
-Runs fully locally, no API key needed. You'll see `[embedding backend: local]`
-printed at the top of the output.
+Install dependencies and score the sample submissions in Windows Command
+Prompt (`cmd`):
 
-### Switch to live Gemini embeddings
-
-**Step 1 — get a free API key**
-Go to [aistudio.google.com](https://aistudio.google.com/), sign in, and
-generate a free API key.
-
-**Step 2 — install the Gemini SDK**
-```bash
-python -m pip install "google-genai>=1.0"
+```cmd
+python -m pip install -r requirements.txt
+set "EMBEDDING_BACKEND=local"
+python -m src.score
 ```
 
-**Step 3 — set the environment variables**
+No API key or network access is required. To run the tests:
 
-In Windows Command Prompt (`cmd`):
+```cmd
+python -m pytest tests -v
+```
+
+### Gemini CLI
+
+Create a key in [Google AI Studio](https://aistudio.google.com/) and install
+the dependencies:
+
+```cmd
+python -m pip install -r requirements.txt
+```
+
+In the same `cmd` window, set the key and backend, then run the scorer:
+
 ```cmd
 set "GEMINI_API_KEY=YOUR_API_KEY"
 set "EMBEDDING_BACKEND=gemini"
-```
-
-In PowerShell:
-```powershell
-$env:GEMINI_API_KEY = "YOUR_API_KEY"
-$env:EMBEDDING_BACKEND = "gemini"
-```
-
-In Bash:
-```bash
-export GEMINI_API_KEY=your-key-here
-export EMBEDDING_BACKEND=gemini
-```
-
-**Step 4 — run exactly as before**
-```cmd
 python -m src.score
 ```
-You'll see `[embedding backend: gemini]` printed at the top, and every
-`embed()` call now goes to Google's `gemini-embedding-001` model instead of
-the local TF-IDF vectorizer. Same CLI, same output format, same tests —
-only the underlying similarity calculation changes.
 
-**To switch back to offline**, just unset (or override) the variable:
-```bash
-unset EMBEDDING_BACKEND
-# or explicitly: export EMBEDDING_BACKEND=local
-python3 -m src.score
+Replace the placeholder with your key locally; never commit it. The output
+prints `[embedding backend: gemini]` when Gemini is selected.
+
+The relevance cutoff (`0.07`) was tuned with local TF-IDF, not Gemini. In the
+sample Gemini run, off-topic items received positive rewards, so Gemini has
+not yet been validated against the no-off-topic-reward requirement. Re-tune
+and test the relevance gate before relying on Gemini scores.
+
+### Streamlit demo
+
+Install the app dependencies and launch it from the repository root:
+
+```cmd
+python -m pip install -r requirements-app.txt
+python -m streamlit run src/app.py
 ```
-In Windows Command Prompt, run `set "EMBEDDING_BACKEND=local"` before
-`python -m src.score`.
+
+Choose **Local (offline)** or **Gemini API** in the app sidebar. Local mode
+needs no key. For Gemini mode, set `GEMINI_API_KEY` in the same terminal
+before launching Streamlit; the app's selector chooses the backend and does
+not require `EMBEDDING_BACKEND`.
 
 ### Notes
 
